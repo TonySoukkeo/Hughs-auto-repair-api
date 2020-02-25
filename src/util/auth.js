@@ -6,7 +6,8 @@ module.exports = async (req, res, next) => {
     const header = req.get("Authorization");
 
     if (!header) {
-      next();
+      req.isAuth = false;
+      return next();
     }
 
     // Extract token from header
@@ -16,7 +17,9 @@ module.exports = async (req, res, next) => {
     const verifyToken = await jwt.verify(token, process.env.JWT_SECRET);
 
     if (!verifyToken) {
-      next();
+      req.isAuth = false;
+
+      return next();
     }
 
     // Set userId and isAuth

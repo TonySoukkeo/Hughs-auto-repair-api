@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
-const Schema = mongoose.Schema();
 
-const BlogSchema = Schema({
+const BlogSchema = mongoose.Schema({
   title: {
     required: true,
     type: String
@@ -16,7 +15,14 @@ const BlogSchema = Schema({
     type: Date,
     default: new Date()
   },
-  edited: Date,
+  edited: {
+    date: {
+      type: Date
+    },
+    by: {
+      type: mongoose.Types.ObjectId
+    }
+  },
   body: {
     required: true,
     type: String
