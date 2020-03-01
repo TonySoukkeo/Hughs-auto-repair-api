@@ -4,6 +4,9 @@ const router = express.Router();
 // Controllers
 const blogControllers = require("../controllers/blog");
 
+// Get single blog post
+router.get("/post", blogControllers.getSingleBlogPost);
+
 // Get blog posts
 router.get("/posts", blogControllers.getBlogPosts);
 

@@ -49,7 +49,7 @@ module.exports.postBlog = async (req, res, next) => {
     // Save blog to database
     await blog.save();
 
-    res.status(200).json({ message: "Blog added", status: 200 });
+    res.status(200).json({ message: "Blog added", id: blog._id, status: 200 });
   } catch (err) {
     next(err);
   }
@@ -161,19 +161,40 @@ module.exports.postDeleteBlogPost = async (req, res, next) => {
 module.exports.getBlogPosts = async (req, res, next) => {
   try {
     const page = req.query.page || 1;
-    const PER_PAGE = 6;
+    const LIMIT = parseInt(req.query.limit);
 
     const total_count = await Blog.find({}).count();
 
     const blog = await Blog.find({})
-      .limit(PER_PAGE)
-      .skip(page * PER_PAGE - PER_PAGE);
+      .sort({ postedDate: -1 })
+      .limit(LIMIT)
+      .skip(page * LIMIT - LIMIT);
 
     let loadMore = true;
 
-    if (PER_PAGE * page >= total_count) loadMore = false;
+    if (LIMIT * page >= total_count) loadMore = false;
 
     res.status(200).json({ blog, loadMore, status: 200 });
+  } catch (err) {
+    next(err);
+  }
+};
+
+/*********************
+  Get single blog post
+ *********************/
+module.exports.getSingleBlogPost = async (req, res, next) => {
+  try {
+    const blogId = req.query.blogId;
+
+    // Check if blog exists
+    const blog = await Blog.findOne({ _id: blogId });
+
+    if (!blog) {
+      setError(404, "Blog post not found");
+    }
+
+    res.status(200).json({ status: 200, blog });
   } catch (err) {
     next(err);
   }

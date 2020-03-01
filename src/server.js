@@ -12,6 +12,7 @@ dotenv.config();
 const userRoutes = require("./routes/user");
 const blogRoutes = require("./routes/blog");
 const galleryRoutes = require("./routes/gallery");
+const authRoutes = require("./routes/auth");
 
 // Auth
 const auth = require("./util/auth");
@@ -81,6 +82,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/auth", authRoutes);
+
 app.use("/gallery", galleryRoutes);
 
 app.use("/user", userRoutes);
@@ -96,6 +99,6 @@ app.use((err, req, res, next) => {
 });
 
 mongoose.connect(process.env.MONGO_URI).then(() => {
-  app.listen(process.env.PORT || 3000);
+  app.listen(process.env.PORT || 3001);
   console.log("connected");
 });

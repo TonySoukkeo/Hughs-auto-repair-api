@@ -6,7 +6,9 @@ const User = require("../model/User");
 
 // Helper functions
 const { setError } = require("../util/errorHandling");
-
+/*******
+ REGISTER
+ ******/
 module.exports.postRegisterUser = async (req, res, next) => {
   try {
     const firstName = req.body.firstName,
@@ -79,7 +81,7 @@ module.exports.postUserLogin = async (req, res, next) => {
     // Generate webtoken
     const token = await jwt.sign({ userId: user._id }, process.env.JWT_SECRET);
 
-    res.status(200).json({ status: 200, token });
+    res.status(200).json({ status: 200, token, user });
   } catch (err) {
     next(err);
   }

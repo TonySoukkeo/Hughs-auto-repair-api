@@ -33,17 +33,16 @@ module.exports.postUploadImage = async (req, res, next) => {
 
     const remove = path.join(__dirname, "..", "..", "public");
     const relPath = req.file.path.replace(remove, "");
-    const imageUrl = `${process.env.URI}${relPath}`;
 
     // Check to see if relPath doesn't already exists in gallery db
-    const gallery = await Gallery.findOne({ url: imageUrl });
+    const gallery = await Gallery.findOne({ url: relPath });
 
     if (!gallery) {
       const date = new Date();
 
       // Create new photo entry
       const photoEntry = new Gallery({
-        url: imageUrl,
+        url: relPath,
         datePosted: date.toISOString()
       });
 
