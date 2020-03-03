@@ -13,6 +13,7 @@ const userRoutes = require("./routes/user");
 const blogRoutes = require("./routes/blog");
 const galleryRoutes = require("./routes/gallery");
 const authRoutes = require("./routes/auth");
+const formRoutes = require("./routes/form");
 
 // Auth
 const auth = require("./util/auth");
@@ -43,8 +44,8 @@ const storage = multer.diskStorage({
 const fileFilter = (req, file, cb, next) => {
   if (
     file.mimetype === "image/png" ||
-    file.mimetype === "img/jpg" ||
-    file.mimetype === "img/jpeg"
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
   ) {
     cb(null, true);
   } else {
@@ -89,6 +90,8 @@ app.use("/gallery", galleryRoutes);
 app.use("/user", userRoutes);
 
 app.use("/blog", blogRoutes);
+
+app.use("/form", formRoutes);
 
 // Error handling
 app.use((err, req, res, next) => {

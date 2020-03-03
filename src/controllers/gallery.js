@@ -37,11 +37,13 @@ module.exports.postUploadImage = async (req, res, next) => {
     // Check to see if relPath doesn't already exists in gallery db
     const gallery = await Gallery.findOne({ url: relPath });
 
+    let photoEntry;
+
     if (!gallery) {
       const date = new Date();
 
       // Create new photo entry
-      const photoEntry = new Gallery({
+      photoEntry = new Gallery({
         url: relPath,
         datePosted: date.toISOString()
       });
@@ -49,7 +51,9 @@ module.exports.postUploadImage = async (req, res, next) => {
       await photoEntry.save();
     }
 
-    res.status(200).json("Image uploaded");
+    res
+      .status(200)
+      .json({ message: "Image uploaded", image: photoEntry, status: 200 });
   } catch (err) {
     next(err);
   }
@@ -105,7 +109,7 @@ module.exports.deleteImage = async (req, res, next) => {
     // Remove image from Gallery collection in db
     await gallery.remove();
 
-    res.status(200).json(relPath);
+    res.status(201).json({ status: 201 });
   } catch (err) {
     next(err);
   }
@@ -116,19 +120,20 @@ module.exports.deleteImage = async (req, res, next) => {
  ***********************/
 module.exports.getGallery = async (req, res, next) => {
   try {
-    const page = req.body.page || 1;
+    const page = parseInt(req.query.page) || 1;
 
-    const PER_PAGE = 12;
+    const limit = parseInt(req.query.limit);
 
-    const total_count = await Gallery.find({}).count();
+    const total_count = await Gallery.find({}).countDocuments();
 
     const gallery = await Gallery.find({})
-      .limit(PER_PAGE)
-      .skip(page * PER_PAGE - PER_PAGE);
+      .sort({ datePosted: -1 })
+      .limit(limit)
+      .skip(page * limit - limit);
 
     let loadMore = false;
 
-    if (PER_PAGE * page >= total_count) loadMore = false;
+    if (total_count >= limit * page) loadMore = true;
 
     res.status(200).json({ gallery, loadMore, status: 200 });
   } catch (err) {

@@ -149,7 +149,7 @@ module.exports.postDeleteBlogPost = async (req, res, next) => {
     // Delete blog post
     await Blog.deleteOne({ _id: blogId });
 
-    res.status(200).json({ message: "Post deleted", status: 200 });
+    res.status(201).json({ message: "Post deleted", status: 201 });
   } catch (err) {
     next(err);
   }
@@ -160,7 +160,7 @@ module.exports.postDeleteBlogPost = async (req, res, next) => {
  *********/
 module.exports.getBlogPosts = async (req, res, next) => {
   try {
-    const page = req.query.page || 1;
+    const page = parseInt(req.query.page) || 1;
     const LIMIT = parseInt(req.query.limit);
 
     const total_count = await Blog.find({}).count();
