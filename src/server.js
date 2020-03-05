@@ -14,11 +14,16 @@ const blogRoutes = require("./routes/blog");
 const galleryRoutes = require("./routes/gallery");
 const authRoutes = require("./routes/auth");
 const formRoutes = require("./routes/form");
+const { getReview } = require("./util/getReviews");
+const getReviews = require("./controllers/reviews");
 
 // Auth
 const auth = require("./util/auth");
 
 const app = express();
+
+// Get reviews
+app.listen(getReview);
 
 // Authentification check
 app.use(auth);
@@ -82,6 +87,8 @@ app.use((req, res, next) => {
 
   next();
 });
+
+app.get("/reviews", getReviews);
 
 app.use("/auth", authRoutes);
 
