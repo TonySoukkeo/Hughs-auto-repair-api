@@ -8,7 +8,10 @@ const Review = require("../model/Review");
 
 // Web scrape for reviews off of FB
 const scrapeReview = async () => {
-  const browser = await puppeteer.launch({ headless: true });
+  const browser = await puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox"]
+  });
 
   const page = await browser.newPage();
 
