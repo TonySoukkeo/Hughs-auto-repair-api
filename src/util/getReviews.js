@@ -70,9 +70,9 @@ const getReview = () => {
 
         for (let i = 0; i < reviewsToPush.length; i++) {
           const newReview = new Review({
-            name: reviewsToPush[0].name,
-            datePosted: reviewsToPush[0].datePosted,
-            review: reviewsToPush[0].review
+            name: reviewsToPush[i].name,
+            datePosted: reviewsToPush[i].datePosted,
+            review: reviewsToPush[i].review
           });
 
           await newReview.save();

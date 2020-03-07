@@ -88,6 +88,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/test", (req, res, next) => {
+  res.status(200).json("Successfully reached");
+});
+
 app.get("/reviews", getReviews);
 
 app.use("/auth", authRoutes);
