@@ -89,7 +89,7 @@ app.use((req, res, next) => {
 });
 
 app.get("/test", (req, res, next) => {
-  res.status(200).json("Successfully reached");
+  res.status(200).json("working");
 });
 
 app.get("/reviews", getReviews);
