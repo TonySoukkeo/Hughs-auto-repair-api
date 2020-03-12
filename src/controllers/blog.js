@@ -162,7 +162,7 @@ module.exports.getBlogPosts = async (req, res, next) => {
   try {
     const page = parseInt(req.query.page) || 1;
     const LIMIT = parseInt(req.query.limit);
-
+    console.log("made it in");
     const total_count = await Blog.find({}).count();
 
     const blog = await Blog.find({})
