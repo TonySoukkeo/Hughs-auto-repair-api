@@ -173,7 +173,7 @@ module.exports.getBlogPosts = async (req, res, next) => {
     let loadMore = true;
 
     if (LIMIT * page >= total_count) loadMore = false;
-
+    res.setHeader("Content-Type", "application/json");
     res.status(200).json({ blog, loadMore, status: 200 });
   } catch (err) {
     next(err);
