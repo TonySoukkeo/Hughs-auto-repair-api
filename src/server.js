@@ -49,9 +49,20 @@ const app = express();
 // Get reviews
 app.listen(getReview);
 
-// Cors
-app.use(cors());
-app.options("*", cors());
+// // Cors
+// app.use(cors());
+// app.options("*", cors());
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "https://hughsshopgf.com");
+
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+
+  next();
+});
 
 // Authentification check
 app.use(auth);
