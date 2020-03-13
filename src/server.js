@@ -24,30 +24,32 @@ const auth = require("./util/auth");
 const app = express();
 
 // Set headers
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
 
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, , X-Requested-With, Origin, Accept, Access-Control-Allow-Origin"
-  );
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, , X-Requested-With, Origin, Accept, Access-Control-Allow-Origin"
+//   );
 
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-  );
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+//   );
 
-  res.statusCode = 200;
+//   res.statusCode = 200;
 
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
+//   if (req.method === "OPTIONS") {
+//     return res.sendStatus(200);
+//   }
 
-  next();
-});
+//   next();
+// });
 
 // Get reviews
 app.listen(getReview);
+
+app.use(cors({ origin: "https://hughsshopgf.com" }));
 
 // Authentification check
 app.use(auth);
