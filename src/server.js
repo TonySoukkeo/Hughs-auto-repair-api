@@ -23,32 +23,35 @@ const auth = require("./util/auth");
 
 const app = express();
 
+// // Set headers
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+
+//   res.setHeader(
+//     "Access-Control-Allow-Headers",
+//     "Content-Type, Authorization, , X-Requested-With, Origin, Accept"
+//   );
+
+//   res.setHeader(
+//     "Access-Control-Allow-Methods",
+//     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
+//   );
+
+//   res.statusCode = 200;
+
+//   if (req.method === "OPTIONS") {
+//     return res.sendStatus(200);
+//   }
+
+//   next();
+// });
+
 // Get reviews
 app.listen(getReview);
 
 // Cors
 app.use(cors());
-
-// Set headers
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-  // res.setHeader(
-  //   "Access-Control-Allow-Headers",
-  //   "Content-Type, Authorization, , X-Requested-With, Origin, Accept, Access-Control-Allow-Origin"
-  // );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-  );
-
-  res.statusCode = 200;
-
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(200);
-  }
-
-  next();
-});
+app.options("*", cors());
 
 // Authentification check
 app.use(auth);
