@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const path = require("path");
 const multer = require("multer");
+const cors = require("cors");
 
 // Initialize dotenv
 dotenv.config();
@@ -24,6 +25,9 @@ const app = express();
 
 // Get reviews
 app.listen(getReview);
+
+// Cors
+app.use(cors());
 
 // Authentification check
 app.use(auth);
