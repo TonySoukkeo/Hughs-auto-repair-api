@@ -50,19 +50,23 @@ const app = express();
 app.listen(getReview);
 
 // // Cors
-// app.use(cors());
-// app.options("*", cors());
+app.use(cors({ origin: "https://hughsshopgf.com" }));
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "https://hughsshopgf.com");
+// app.use(function(req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "https://hughsshopgf.com");
 
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
+//   // res.setHeader(
+//   //   "Access-Control-Allow-Headers",
+//   //   "Origin, X-Requested-With, Content-Type, Accept"
+//   // );
 
-  next();
-});
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+
+//   // Request headers you wish to allow
+//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+
+//   next();
+// });
 
 // Authentification check
 app.use(auth);
