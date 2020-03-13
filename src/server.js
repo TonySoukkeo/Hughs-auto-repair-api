@@ -23,32 +23,13 @@ const auth = require("./util/auth");
 
 const app = express();
 
-// Get reviews
-app.listen(getReview);
-
-// app.use(function(req, res, next) {
-//   res.setHeader("Access-Control-Allow-Origin", "https://hughsshopgf.com");
-
-//   // res.setHeader(
-//   //   "Access-Control-Allow-Headers",
-//   //   "Origin, X-Requested-With, Content-Type, Accept"
-//   // );
-
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-//   // Request headers you wish to allow
-//   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-//   next();
-// });
-
 // Set headers
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   res.setHeader(
     "Access-Control-Allow-Headers",
-    "Content-Type, Authorization, , X-Requested-With, Origin, Accept"
+    "Content-Type, Authorization, , X-Requested-With, Origin, Accept, Access-Control-Allow-Origin"
   );
 
   res.setHeader(
@@ -64,6 +45,9 @@ app.use((req, res, next) => {
 
   next();
 });
+
+// Get reviews
+app.listen(getReview);
 
 // Authentification check
 app.use(auth);
