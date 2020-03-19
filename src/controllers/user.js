@@ -96,8 +96,6 @@ module.exports.postChangePassword = async (req, res, next) => {
     const isAuth = req.isAuth;
     const userId = req.userId;
 
-    console.log(password, oldPassword);
-
     // Check if user is authenticated
     if (!isAuth) {
       setError(402, "Not authorized");

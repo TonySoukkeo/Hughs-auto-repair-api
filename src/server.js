@@ -26,7 +26,7 @@ const app = express();
 // Get reviews
 app.listen(getReview);
 
-app.use(cors({ origin: "https://hughsshopgf.com" }));
+// app.use(cors({ origin: "https://hughsshopgf.com" }));
 
 // Authentification check
 app.use(auth);
