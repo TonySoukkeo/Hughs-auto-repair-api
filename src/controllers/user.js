@@ -91,9 +91,12 @@ module.exports.postUserLogin = async (req, res, next) => {
 module.exports.postChangePassword = async (req, res, next) => {
   try {
     const password = req.body.password;
+    const oldPassword = req.body.oldPassword;
 
     const isAuth = req.isAuth;
     const userId = req.userId;
+
+    console.log(password, oldPassword);
 
     // Check if user is authenticated
     if (!isAuth) {
@@ -105,6 +108,13 @@ module.exports.postChangePassword = async (req, res, next) => {
 
     if (!user) {
       setError(404, "User not found");
+    }
+
+    // Check if old password matches password from found user
+    const validateOldPW = await bcrypt.compare(oldPassword, user.password);
+
+    if (!validateOldPW) {
+      setError(422, "Incorrect old password supplied");
     }
 
     // Check password length
@@ -125,7 +135,9 @@ module.exports.postChangePassword = async (req, res, next) => {
     // Update user password
     await user.update({ password: hashedPw });
 
-    res.status(200).json("Password changed");
+    res
+      .status(200)
+      .json({ status: 200, message: "Password succesfully updated!" });
   } catch (err) {
     next(err);
   }

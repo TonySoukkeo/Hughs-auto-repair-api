@@ -23,29 +23,6 @@ const auth = require("./util/auth");
 
 const app = express();
 
-// Set headers
-// app.use((req, res, next) => {
-//   res.setHeader("Access-Control-Allow-Origin", "*");
-
-//   res.setHeader(
-//     "Access-Control-Allow-Headers",
-//     "Content-Type, Authorization, , X-Requested-With, Origin, Accept, Access-Control-Allow-Origin"
-//   );
-
-//   res.setHeader(
-//     "Access-Control-Allow-Methods",
-//     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
-//   );
-
-//   res.statusCode = 200;
-
-//   if (req.method === "OPTIONS") {
-//     return res.sendStatus(200);
-//   }
-
-//   next();
-// });
-
 // Get reviews
 app.listen(getReview);
 
@@ -92,10 +69,6 @@ app.use(multer({ storage, fileFilter }).single("img"));
 
 // Serve static files
 app.use(express.static(path.join(__dirname, "..", "public")));
-
-app.get("/test", (req, res, next) => {
-  res.status(200).json("working");
-});
 
 app.get("/reviews", getReviews);
 
